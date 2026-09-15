@@ -194,4 +194,26 @@ internal class Program
         int localVariable = 42; // Method scope: destroyed when method returns
         Console.WriteLine($"Local method scope: {localVariable}, field read: {_globalAppCounter}");
     }
+    // ========================================================================
+    // PART F: LeetCode Single Number
+    // ========================================================================
+    static int FindSingleNumber(int[] nums)
+    {
+        int result = 0;
+        foreach (int num in nums)
+        {
+            result ^= num; // XOR-ing a number with itself cancels it out (a ^ a = 0)
+        }
+        return result;
+    }
+
+    static void RunLeetCodeDemo()
+    {
+        Console.WriteLine("\n=== PART F: LeetCode 136 ===");
+        int[] test1 = { 4, 1, 2, 1, 2 };
+        int[] test2 = { 2, 2, 1 };
+        Console.WriteLine($"Test 1 result: {FindSingleNumber(test1)}");
+        Console.WriteLine($"Test 2 result: {FindSingleNumber(test2)}");
+    }
+
 }
