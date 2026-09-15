@@ -214,6 +214,7 @@ internal class Program
         int[] test2 = { 2, 2, 1 };
         Console.WriteLine($"Test 1 result: {FindSingleNumber(test1)}");
         Console.WriteLine($"Test 2 result: {FindSingleNumber(test2)}");
+
     }
 
 }
