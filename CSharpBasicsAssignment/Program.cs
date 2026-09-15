@@ -1,5 +1,4 @@
-﻿namespace CSharpBasicsAssignment;
-// ============================================================================
+﻿// ============================================================================
 // PART A: Project & Structure
 // ============================================================================
 // 1. File and Folder Roles:
@@ -16,13 +15,26 @@
 //    - Advantage of .slnx: Clean, readable XML structure that is easier to merge in Git.
 // ============================================================================
 
+namespace CSharpBasicsAssignment;
+
 internal class Program
 {
-    struct Point
+    // D1: Field Scope - Accessible across methods in this class
+    private static int _globalAppCounter = 100;
+
+    static void Main(string[] args)
     {
-        public int X;
-        public int Y;
+        Console.WriteLine("=== PART A: Project & Structure Complete ===");
+
+        RunTypesDemo();
+        RunValueVsReferenceDemo();
+        RunScopeAndOperatorsDemo();
+        RunLeetCodeDemo();
     }
+
+    // ========================================================================
+    // PART B: Variables, Types & Casting
+    // ========================================================================
     static void RunTypesDemo()
     {
         Console.WriteLine("\n=== PART B: Variables, Types & Casting ===");
@@ -78,7 +90,15 @@ internal class Program
         // decimal decVal = floatVal; // Compiler Error: Potential precision loss and different binary representation
         decimal explicitDec = (decimal)floatVal;
         Console.WriteLine($"Explicit decimal from float: {explicitDec}");
+    }
 
+    // ========================================================================
+    // PART C: Value vs. Reference Types
+    // ========================================================================
+    struct Point
+    {
+        public int X;
+        public int Y;
     }
 
     static void RunValueVsReferenceDemo()
@@ -122,11 +142,56 @@ internal class Program
         // Written explanation
         // Value types live on the stack; assigning them copies raw values.
         // Reference types store object data on the heap and references on the stack; assignment copies references.
-        // Storing a reference type in an object variable does not box or duplicate
+        // Storing a reference type in an object variable does not box or duplicate the object.
     }
-    static void Main(string[] args)
+
+    // ========================================================================
+    // PART D: Scope & Operators
+    // ========================================================================
+    static void RunScopeAndOperatorsDemo()
     {
-        Console.WriteLine("=== PART A: Project & Structure Complete ===");
-        RunTypesDemo();
+        Console.WriteLine("\n=== PART D: Scope & Operators ===");
+
+        // D1: Scope
+        Console.WriteLine($"Field scope in RunScope: {_globalAppCounter}");
+        MethodScopeExample();
+
+        // Block Scope
+        for (int i = 0; i < 2; i++)
+        {
+            int blockScoped = 10;
+        }
+        // Console.WriteLine(i); // Error: 'i' does not exist in the current context
+        // Console.WriteLine(blockScoped); // Error: 'blockScoped' does not exist outside the loop
+
+        // D2: Compound Operators
+        int total = 100;
+        total += 10; // total = total + 10; (equivalent long form)
+        Console.WriteLine($"After +=: {total}");
+        total -= 5;
+        Console.WriteLine($"After -=: {total}");
+        total *= 2;
+        Console.WriteLine($"After *=: {total}");
+        total /= 3;
+        Console.WriteLine($"After /=: {total}");
+        total %= 4;
+        Console.WriteLine($"After %=: {total}");
+
+        // D3: Bitwise Operators
+        int a = 12; // Binary: 1100
+        int b = 10; // Binary: 1010
+        // a & b: 1100 & 1010 = 1000 (8)
+        // a | b: 1100 | 1010 = 1110 (14)
+        // a ^ b: 1100 ^ 1010 = 0110 (6)
+        Console.WriteLine($"a & b = {a & b}, a | b = {a | b}, a ^ b = {a ^ b}");
+
+        // Practical difference:
+        // & evaluates both sides always; && short-circuits and skips the right side if the left is false.
+    }
+
+    static void MethodScopeExample()
+    {
+        int localVariable = 42; // Method scope: destroyed when method returns
+        Console.WriteLine($"Local method scope: {localVariable}, field read: {_globalAppCounter}");
     }
 }
