@@ -18,6 +18,11 @@
 
 internal class Program
 {
+    struct Point
+    {
+        public int X;
+        public int Y;
+    }
     static void RunTypesDemo()
     {
         Console.WriteLine("\n=== PART B: Variables, Types & Casting ===");
@@ -74,6 +79,50 @@ internal class Program
         decimal explicitDec = (decimal)floatVal;
         Console.WriteLine($"Explicit decimal from float: {explicitDec}");
 
+    }
+
+    static void RunValueVsReferenceDemo()
+    {
+        Console.WriteLine("\n=== PART C: Value vs. Reference Types ===");
+
+        // Experiment 1: Struct Copy Semantics (Value Type)
+        Point p1 = new Point { X = 1, Y = 2 };
+        Point p2 = p1; // Creates an independent copy on the stack
+        p2.X = 99;
+        // p1.X and p2.X differ because value types copy the actual data
+        Console.WriteLine($"p1.X: {p1.X}, p2.X: {p2.X}");
+
+        // Experiment 2: Class Reference Semantics (Reference Type)
+        Order o1 = new Order
+        {
+            OrderId = 1,
+            CustomerName = "Ali",
+            Quantity = 2,
+            UnitPrice = 50m,
+            DiscountPercent = 10,
+            IsPaid = false,
+            ShippingCity = "Cairo",
+            Priority = 'H',
+            ItemCode = 1001L
+        };
+        o1.CalculateTotal();
+
+        Order o2 = o1; // Copies reference (memory address), both point to the same heap object
+        o2.IsPaid = true;
+        // o1.IsPaid and o2.IsPaid are both true because they share the same heap instance
+        Console.WriteLine($"o1.IsPaid: {o1.IsPaid}, o2.IsPaid: {o2.IsPaid}");
+
+        // Working with object
+        object boxedOrder = o1; // No boxing occurs; o1 is a reference type, only address copied
+        Order o3 = (Order)boxedOrder;
+        Console.WriteLine($"ReferenceEquals(o1, o3): {object.ReferenceEquals(o1, o3)}");
+
+        o2.PrintSummary();
+
+        // Written explanation
+        // Value types live on the stack; assigning them copies raw values.
+        // Reference types store object data on the heap and references on the stack; assignment copies references.
+        // Storing a reference type in an object variable does not box or duplicate
     }
     static void Main(string[] args)
     {
